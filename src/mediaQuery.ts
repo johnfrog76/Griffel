@@ -1,3 +1,5 @@
+// issue: library seems to have trouble with mixed values 100's and 1000's
+// these work 0-99
 export const breakpoints = {
   xs: 22.5,
   s: 40,
@@ -28,5 +30,3 @@ export const compareMediaQueries = (a: string, b: string) => {
 
 const sorted = mediaQueryOrder.sort(compareMediaQueries);
 console.log("sorted: ", sorted);
-
-/// createDOMRenderer(document, { compareMediaQueries });
