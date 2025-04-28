@@ -23,14 +23,18 @@ const useStyles = makeStyles({
     maxWidth: "calc(100% - 3.5rem)",
     padding: "1.5rem",
     display: "grid",
+
+    // mobile
     gridTemplateColumns: "repeat(1, auto)",
     gap: "1rem",
+
     [mediaQueryMobileFirst.md]: {
+      // medium
       gridTemplateColumns: "repeat(2, 1fr)",
       gap: "2rem",
     },
-
-    [mediaQueryMobileFirst.l]: {
+    [mediaQueryMobileFirst.xl]: {
+      // xl
       gridTemplateColumns: "repeat(4, 1fr)",
       gap: "1rem",
     },
@@ -41,6 +45,7 @@ const useStyles = makeStyles({
     fontSize: "2.5rem",
     // mobile
     color: "#000000",
+
     [mediaQueryMobileFirst.xs]: {
       // small
       backgroundColor: "lightyellow",
