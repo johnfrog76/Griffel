@@ -1,44 +1,81 @@
-import React from 'react';
-import { Stack, Text, Link, FontWeights, IStackTokens, IStackStyles, ITextStyles } from '@fluentui/react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  RendererProvider,
+  createDOMRenderer,
+  makeStyles,
+} from "@griffel/react";
+import { mediaQueryMobileFirst } from "./mediaQuery";
+import { compareMediaQueries } from "./mediaQuery";
 
-const boldStyle: Partial<ITextStyles> = { root: { fontWeight: FontWeights.semibold } };
-const stackTokens: IStackTokens = { childrenGap: 15 };
-const stackStyles: Partial<IStackStyles> = {
+const renderer = createDOMRenderer(document, {
+  compareMediaQueries: compareMediaQueries,
+});
+
+const useStyles = makeStyles({
   root: {
-    width: '960px',
-    margin: '0 auto',
-    textAlign: 'center',
-    color: '#605e5c',
+    fontSize: "1.5rem",
+    backgroundColor: "#333",
+    height: "100vh",
+    width: "100vw",
+    color: "#efefef",
   },
-};
+  main: {
+    maxWidth: "calc(100% - 3.5rem)",
+    padding: "1.5rem",
+    display: "grid",
+    gridTemplateColumns: "repeat(1, auto)",
+    gap: "1rem",
+    [mediaQueryMobileFirst.md]: {
+      gridTemplateColumns: "repeat(2, 1fr)",
+      gap: "2rem",
+    },
+
+    [mediaQueryMobileFirst.l]: {
+      gridTemplateColumns: "repeat(4, 1fr)",
+      gap: "1rem",
+    },
+  },
+  card: {
+    border: "1px solid #efefef",
+    padding: "1rem",
+    fontSize: "2.5rem",
+    // mobile
+    color: "#000000",
+    [mediaQueryMobileFirst.xs]: {
+      // small
+      backgroundColor: "lightyellow",
+    },
+    [mediaQueryMobileFirst.s]: {
+      // med
+      backgroundColor: "lightpink",
+    },
+    [mediaQueryMobileFirst.md]: {
+      // large
+      backgroundColor: "aqua",
+    },
+    [mediaQueryMobileFirst.l]: {
+      // large
+      backgroundColor: "purple",
+    },
+    [mediaQueryMobileFirst.xl]: {
+      // xl
+      backgroundColor: "powderblue",
+    },
+  },
+});
 
 export const App: React.FunctionComponent = () => {
+  const styles = useStyles();
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" verticalFill styles={stackStyles} tokens={stackTokens}>
-      <img className="App-logo" src={logo} alt="logo" />
-      <Text variant="xxLarge" styles={boldStyle}>
-        Welcome to your Fluent UI app
-      </Text>
-      <Text variant="large">For a guide on how to customize this project, check out the Fluent UI documentation.</Text>
-      <Text variant="large" styles={boldStyle}>
-        Essential links
-      </Text>
-      <Stack horizontal tokens={stackTokens} horizontalAlign="center">
-        <Link href="https://developer.microsoft.com/en-us/fluentui#/get-started/web">Docs</Link>
-        <Link href="https://stackoverflow.com/questions/tagged/office-ui-fabric">Stack Overflow</Link>
-        <Link href="https://github.com/microsoft/fluentui/">Github</Link>
-        <Link href="https://twitter.com/fluentui">Twitter</Link>
-      </Stack>
-      <Text variant="large" styles={boldStyle}>
-        Design system
-      </Text>
-      <Stack horizontal tokens={stackTokens} horizontalAlign="center">
-        <Link href="https://developer.microsoft.com/en-us/fluentui#/styles/web/icons">Icons</Link>
-        <Link href="https://developer.microsoft.com/en-us/fluentui#/styles/web">Styles</Link>
-        <Link href="https://aka.ms/themedesigner">Theme designer</Link>
-      </Stack>
-    </Stack>
+    <RendererProvider renderer={renderer}>
+      <div className={styles.root}>
+        <div className={styles.main}>
+          <div className={styles.card}>card 1</div>
+          <div className={styles.card}>card 2</div>
+          <div className={styles.card}>card 3</div>
+          <div className={styles.card}>card 4</div>
+        </div>
+      </div>
+    </RendererProvider>
   );
 };
